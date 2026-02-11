@@ -2,7 +2,7 @@ public class SistemaDeCadastro {
     public void main(){
         while (true){
             int opt;
-            opt = Menu.MenuInicial();
+            opt = Menu.menuInicial();
 
             switch (opt){
                 case 1:

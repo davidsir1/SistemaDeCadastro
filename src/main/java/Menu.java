@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Menu {
-    public static int MenuInicial(){
+    public static int menuInicial(){
         Scanner leitura = new Scanner(System.in);
 
         System.out.println("1. Cadastrar novo pet");
@@ -13,4 +13,6 @@ public class Menu {
         System.out.print("-> ");
         return leitura.nextInt();
     }
+
+    public static void cadastroPet(){}
 }
