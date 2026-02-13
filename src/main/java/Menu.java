@@ -11,8 +11,9 @@ public class Menu {
         System.out.println("5. Listar pets por algum criterio (idade, nome, raça");
         System.out.println("6. Sair");
         System.out.print("-> ");
-        return leitura.nextInt();
+        if (leitura.hasNextInt())
+            return leitura.nextInt();
+        else
+            return 0;
     }
-
-    public static void cadastroPet(){}
 }
