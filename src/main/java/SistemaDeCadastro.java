@@ -4,8 +4,11 @@ public class SistemaDeCadastro {
             int opt;
             opt = Menu.menuInicial();
 
+            Pet pet;
+
             switch (opt){
                 case 1:
+                    pet = Menu.cadastrarPet();
                     break;
                 case 2:
                     break;
