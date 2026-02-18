@@ -1,4 +1,5 @@
 public enum Sexo {
     MACHO,
-    FEMEA
+    FEMEA,
+    NAO_DEFINIDO
 }
