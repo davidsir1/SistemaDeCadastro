@@ -1,13 +1,15 @@
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Scanner;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Menu {
-    final static String caminho_formulario = "data\\forms\\formulario.txt";
 
-    public static int menuInicial(){
+    static final String caminho_formulario = "data\\forms\\formulario.txt";
+    static final String campoEmBranco = "NÃO INFORMADO"; // Constante parar ser utilizando em campos nulos
+
+    public static int menuInicial() {
         Scanner leitura = new Scanner(System.in);
 
         System.out.println("1. Cadastrar novo pet");
@@ -17,18 +19,16 @@ public class Menu {
         System.out.println("5. Listar pets por algum criterio (idade, nome, raça)");
         System.out.println("6. Sair");
         System.out.print("-> ");
-        if (leitura.hasNextInt())
-            return leitura.nextInt();
-        else
-            return 0;
+        if (leitura.hasNextInt()) return leitura.nextInt();
+        else return 0;
     }
 
-    public static Pet cadastrarPet(){
+    public static Pet cadastrarPet() {
         File arquivo_formulario = new File(caminho_formulario);
         String dados[] = new String[7];
         Pet novoPet = new Pet();
 
-        if (!arquivo_formulario.exists()){
+        if (!arquivo_formulario.exists()) {
             System.out.println("O arquivo não existe!");
             return null;
         }
@@ -42,80 +42,114 @@ public class Menu {
             while ((linha = br.readLine()) != null) {
                 System.out.println(linha); // Exibe a pergunta do formulario
 
-                if (perguntaAtual == 0) { // Caso de teste na primeira pergunta: nome e sobrenome
-                    System.out.print("-> ");
-                    dados[perguntaAtual] = leitura.nextLine();
+                switch (perguntaAtual) {
+                    case 0: // Pergunta sobre nome e sobrenome
+                        System.out.print("-> ");
+                        dados[perguntaAtual] = leitura.nextLine();
 
-                    // Verifica se o nome e sobrenome possui caracter especial e apenas letras
-                    if (!dados[perguntaAtual].matches("^[A-Za-z ]+")) {
-                        System.out.println("Apenas letras são permitidas e sem caracteres especiais.");
-                        return null;
-                    }
-
-                    // Verificar se possui nome e sobrenome
-                    String[] partes = dados[perguntaAtual].split("\\s");
-                    if (partes.length < 2) {
-                        System.out.println("Por favor, inclua nome e sobrenome do pet.");
-                        return null;
-                    }
-                } else if (perguntaAtual == 3) { // Pergunta sobre o endereço
-                    System.out.print("i. Digite o número da casa: ");
-                    if (leitura.hasNextInt()) {
-                        dados[perguntaAtual] = leitura.nextLine() + " ";
-                    }
-                    System.out.print("ii. Digite a cidade: ");
-                    dados[perguntaAtual] += leitura.nextLine() + " ";
-                    System.out.print("iii. Digite a rua: ");
-                    dados[perguntaAtual] += leitura.nextLine();
-                } else if (perguntaAtual == 4) { // Pergunta sobre idade
-                    int idade = 0;
-
-                    System.out.print("-> ");
-                    if (leitura.hasNextInt()) {
-                        idade = leitura.nextInt();
-                        leitura.nextLine();
-                        if (idade > 21) {
-                            System.out.println("Valor inválido, apenas digite valores menores que 20.");
-                            return null;
-                        } else if (idade < 1) {
-                            idade /= 10;
-                        }
-                    }
-                    dados[perguntaAtual] = String.valueOf(idade);
-                } else if (perguntaAtual == 5) {
-                    double peso = 0.0;
-
-                    System.out.print("-> ");
-                    if (leitura.hasNextDouble()) {
-                        peso = leitura.nextDouble();
-                        leitura.nextLine();
-                        if (peso > 61 || peso < 0.5) {
-                            System.out.println("Valor inválido, apenas digite valores entre 0.5 e 60 kg.");
+                        // Verifica se o usuário não informou nome ou sobrenome ou
+                        // Verifica se o nome e sobrenome possui caracter especial e apenas letras
+                        if (dados[perguntaAtual].isBlank()) {
+                            dados[perguntaAtual] = campoEmBranco;
+                        } else if (!dados[perguntaAtual].matches("^[A-Za-z ]+")) {
+                            System.out.println(
+                                    "Apenas letras são permitidas e sem caracteres especiais."
+                            );
                             return null;
                         }
-                    }
-                    dados[perguntaAtual] = String.valueOf(peso);
-                } else if (perguntaAtual == 6){
-                    System.out.print("-> ");
-                    dados[perguntaAtual] = leitura.nextLine();
-                    if (!dados[perguntaAtual].matches("^[A-Za-z]+")){
-                        System.out.println("Apenas letras são permitidas e sem caracteres especiais.");
-                        return null;
-                    }
-                } else {
-                    System.out.print("-> ");
-                    dados[perguntaAtual] = leitura.nextLine();
+
+                        // Verificar se possui nome e sobrenome
+                        String[] partes = dados[perguntaAtual].split("\\s");
+                        if (partes.length == 1) {
+                            System.out.println("Por favor, inclua nome e sobrenome do pet.");
+                            return null;
+                        }
+
+                        break;
+                    case 3: // Pergunta sobre o endereço
+                        System.out.print("i. Digite o número da casa: ");
+                        String numeroCasa = leitura.nextLine();
+
+                        if (!numeroCasa.isBlank()){
+                            if (numeroCasa.matches("^[0-9]+")){
+                                dados[perguntaAtual] = numeroCasa + ",";
+                            }
+                        } else {
+                            dados[perguntaAtual] = campoEmBranco + ",";
+                        }
+
+                        System.out.print("ii. Digite a cidade: ");
+                        dados[perguntaAtual] += leitura.nextLine() + ",";
+
+                        System.out.print("iii. Digite a rua: ");
+                        dados[perguntaAtual] += leitura.nextLine();
+
+                        break;
+                    case 4: // Pergunta sobre idade
+                        System.out.print("-> ");
+                        String idade = leitura.nextLine();
+
+                        if (!idade.isBlank()){
+                            if (idade.matches("^[0-9]+") && Integer.parseInt(idade) < 21){
+                                dados[perguntaAtual] = idade;
+                            } else {
+                                System.out.println("Valor inválido. Digite apenas números ou valores menor ou igual a 20.");
+                                return null;
+                            }
+                        } else {
+                            dados[perguntaAtual] = campoEmBranco;
+                        }
+
+                        break;
+                    case 5: // Pergunta sobre peso
+                        System.out.print("-> ");
+                        String peso = leitura.nextLine();
+
+                        if (!peso.isBlank()){
+                            if (peso.matches("^[0-9]*\\.?[0-9]+") &&
+                                    (Double.parseDouble(peso) < 60.0 && Double.parseDouble(peso) > 0.5)){
+                                dados[perguntaAtual] = peso.replace(',', '.');
+                            } else {
+                                System.out.println("Valor inválido. Digite apenas números ou valores entre 0.5 e 60 kg.");
+                                return null;
+                            }
+                        } else {
+                            dados[perguntaAtual] = campoEmBranco;
+                        }
+
+                        break;
+                    case 6: // Pergunta sobre raça
+                        System.out.print("-> ");
+                        dados[perguntaAtual] = leitura.nextLine();
+
+                        if (!dados[perguntaAtual].isBlank()){
+                            if (!dados[perguntaAtual].matches("^[A-Za-z]+")) {
+                                System.out.println(
+                                        "Apenas letras são permitidas e sem caracteres especiais."
+                                );
+                                return null;
+                            }
+                        } else {
+                            dados[perguntaAtual] = campoEmBranco;
+                        }
+
+                        break;
+                    default:
+                        System.out.print("-> ");
+                        dados[perguntaAtual] = leitura.nextLine();
+                        break;
                 }
 
                 perguntaAtual++;
             }
-        } catch (IOException e){
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         novoPet.salvarPet(dados);
 
-        //novoPet.exibirDados();
+        novoPet.exibirDados();
 
         return novoPet;
     }
