@@ -1,4 +1,5 @@
 public enum TipoAnimal {
     CACHORRO,
-    GATO
+    GATO,
+    NAO_DEFINIDO
 }
