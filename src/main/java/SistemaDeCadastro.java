@@ -19,6 +19,7 @@ public class SistemaDeCadastro {
                 case 5:
                     break;
                 case 6:
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Valor inválido. Digite os valores de 1 até 6.");
