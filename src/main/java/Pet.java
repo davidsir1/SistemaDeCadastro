@@ -1,12 +1,48 @@
+import java.time.*;
+
 public class Pet {
 
-    String nome, sobrenome;
+    String nome;
+    String sobrenome;
     String endereco;
     double peso;
     int idade;
     Sexo sexo;
     TipoAnimal tipo;
     String raca;
+
+    // Getters e Setters
+    public String getNome() {
+        return nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public TipoAnimal getTipo() {
+        return tipo;
+    }
+
+    public String getRaca() {
+        return raca;
+    }
 
     // Metodos
 
@@ -59,7 +95,7 @@ public class Pet {
             this.raca = Menu.campoEmBranco;
         }
     }
-
+    
     public void exibirDados() {
         System.out.println("Nome: " + this.nome);
         System.out.println("Sobrenome: " + this.sobrenome);
