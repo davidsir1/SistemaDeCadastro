@@ -11,8 +11,8 @@ public class Pet {
     String nome;
     String sobrenome;
     String endereco;
-    double peso;
-    int idade;
+    String peso;
+    String idade;
     PetSexo sexo;
     PetTipo tipoAnimal;
     String raca;
@@ -30,11 +30,11 @@ public class Pet {
         return endereco;
     }
 
-    public double getPeso() {
+    public String getPeso() {
         return peso;
     }
 
-    public int getIdade() {
+    public String getIdade() {
         return idade;
     }
 
@@ -62,11 +62,11 @@ public class Pet {
         this.endereco = endereco;
     }
 
-    public void setPeso(double peso) {
+    public void setPeso(String peso) {
         this.peso = peso;
     }
 
-    public void setIdade(int idade) {
+    public void setIdade(String idade) {
         this.idade = idade;
     }
 
