@@ -1,3 +1,5 @@
+package entities;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -5,14 +7,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Pet {
-
+    // Atributos
     String nome;
     String sobrenome;
     String endereco;
     double peso;
     int idade;
-    Sexo sexo;
-    TipoAnimal tipoAnimal;
+    PetSexo sexo;
+    PetTipo tipoAnimal;
     String raca;
 
     // Getters e Setters
@@ -36,11 +38,11 @@ public class Pet {
         return idade;
     }
 
-    public Sexo getSexo() {
+    public PetSexo getSexo() {
         return sexo;
     }
 
-    public TipoAnimal getTipoAnimal() {
+    public PetTipo getTipoAnimal() {
         return tipoAnimal;
     }
 
@@ -48,58 +50,39 @@ public class Pet {
         return raca;
     }
 
-    // Metodos
-
-    public void salvarPet(String[] dados) {
-        /*
-        Ordem das informações:
-        Nome e Sobrenome,
-        Tipo,
-        Sexo,
-        Endereço e Bairro,
-        Idade,
-        Peso,
-        Raça
-         */
-
-        // Lidar com nome e sobrenome
-        if (dados[0] != Menu.campoEmBranco) {
-            String nome_completo[] = dados[0].split("\\s");
-            this.nome = nome_completo[0];
-            this.sobrenome = nome_completo[1];
-        } else {
-            this.nome = Menu.campoEmBranco;
-            this.sobrenome = Menu.campoEmBranco;
-        }
-
-        // Tipo do animal e sexo
-        this.tipoAnimal = (dados[1].matches("[Cc]achorro")) ? TipoAnimal.CACHORRO : TipoAnimal.GATO;
-        this.sexo = (dados[2].matches("[Mm]acho")) ? Sexo.MACHO : Sexo.FEMEA;
-
-        // Endereço
-        this.endereco = dados[3];
-
-        // idade e peso
-        if (dados[4] != Menu.campoEmBranco) {
-            this.idade = Integer.parseInt(dados[4]);
-        } else {
-            this.idade = 0;
-        }
-
-        if (dados[5] != Menu.campoEmBranco){
-            this.peso = Double.valueOf(dados[5]);
-        } else {
-            this.peso = 0.0;
-        }
-
-        // Raça
-        if (dados[6] != Menu.campoEmBranco) {
-            this.raca = dados[6];
-        } else {
-            this.raca = Menu.campoEmBranco;
-        }
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public void setSexo(PetSexo sexo) {
+        this.sexo = sexo;
+    }
+
+    public void setTipoAnimal(PetTipo tipoAnimal) {
+        this.tipoAnimal = tipoAnimal;
+    }
+
+    public void setRaca(String raca) {
+        this.raca = raca;
+    }
+    
+    // Metodos
     public void salvarArquivoPet(){
         /*
         Formato do arquivo: ano, mês, dia,T, hora, minuto - NOME+SOBRENOME em maiúsculo.
