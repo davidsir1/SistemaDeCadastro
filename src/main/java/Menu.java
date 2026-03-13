@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Menu {
 
     static final String caminho_formulario = "data\\forms\\formulario.txt";
-    static final String campoEmBranco = "NÃO INFORMADO"; // Constante parar ser utilizando em campos nulos
+    static final String campoEmBranco = "NÃO INFORMADO"; // Constante para ser utilizando em campos nulos
 
     public static int menuInicial() {
         Scanner leitura = new Scanner(System.in);
@@ -150,6 +150,8 @@ public class Menu {
         novoPet.salvarPet(dados);
 
         novoPet.exibirDados();
+
+        novoPet.salvarArquivoPet();
 
         return novoPet;
     }

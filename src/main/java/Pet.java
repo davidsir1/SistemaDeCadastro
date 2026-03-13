@@ -1,4 +1,8 @@
-import java.time.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Pet {
 
@@ -8,7 +12,7 @@ public class Pet {
     double peso;
     int idade;
     Sexo sexo;
-    TipoAnimal tipo;
+    TipoAnimal tipoAnimal;
     String raca;
 
     // Getters e Setters
@@ -36,8 +40,8 @@ public class Pet {
         return sexo;
     }
 
-    public TipoAnimal getTipo() {
-        return tipo;
+    public TipoAnimal getTipoAnimal() {
+        return tipoAnimal;
     }
 
     public String getRaca() {
@@ -69,7 +73,7 @@ public class Pet {
         }
 
         // Tipo do animal e sexo
-        this.tipo = (dados[1].matches("[Cc]achorro")) ? TipoAnimal.CACHORRO : TipoAnimal.GATO;
+        this.tipoAnimal = (dados[1].matches("[Cc]achorro")) ? TipoAnimal.CACHORRO : TipoAnimal.GATO;
         this.sexo = (dados[2].matches("[Mm]acho")) ? Sexo.MACHO : Sexo.FEMEA;
 
         // Endereço
@@ -95,11 +99,54 @@ public class Pet {
             this.raca = Menu.campoEmBranco;
         }
     }
-    
+
+    public void salvarArquivoPet(){
+        /*
+        Formato do arquivo: ano, mês, dia,T, hora, minuto - NOME+SOBRENOME em maiúsculo.
+        Resultado final: 20231101T1234-FLORZINHADASILVA.TXT
+         */
+
+        /*
+        Informações no arquivo:
+        1 - Nome Sobrenome
+        2 - Tipo Animal
+        3 - Sexo
+        4 - Endereço
+        5 - Idade
+        6 - Peso
+        7 - Raça
+         */
+
+        String dataAtual = LocalDate.now().toString().replace("-", "");
+        String horaAtual = String.valueOf(LocalTime.now().getHour()) +
+                String.valueOf(LocalTime.now().getMinute());
+        String nome_completo = this.getNome().toUpperCase() + 
+                this.getSobrenome().toUpperCase();
+        String arquivoNome = dataAtual+"T"+horaAtual+nome_completo+".txt";
+
+        File arquivo = new File("data\\petsCadastrados\\"+arquivoNome);
+
+        try (FileWriter fr = new FileWriter(arquivo)){
+            fr.write("1 - " + this.nome + " " + this.sobrenome + "\n");
+            fr.write("2 - " + this.tipoAnimal + "\n");
+            fr.write("3 - " + this.sexo + "\n");
+            fr.write("4 - " + this.endereco + "\n");
+            fr.write("5 - " + this.idade + "\n");
+            fr.write("6 - " + this.peso + "\n");
+            fr.write("7 - " + this.raca);
+
+            fr.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        System.out.println(arquivoNome);
+    }
+
     public void exibirDados() {
         System.out.println("Nome: " + this.nome);
         System.out.println("Sobrenome: " + this.sobrenome);
-        System.out.println("Tipo Animal: " + this.tipo);
+        System.out.println("Tipo Animal: " + this.tipoAnimal);
         System.out.println("Sexo: " + this.sexo);
         System.out.println("Endereço: " + this.endereco);
         System.out.println("Idade: " + this.idade);
