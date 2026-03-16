@@ -1,14 +1,12 @@
 public class SistemaDeCadastro {
-    public void main(){
+    public static void main(String args[]){
         while (true){
             int opt;
             opt = Menu.menuInicial();
 
-            Pet pet;
-
             switch (opt){
                 case 1:
-                    pet = Menu.cadastrarPet();
+                    Menu.cadastrarPet();
                     break;
                 case 2:
                     break;
